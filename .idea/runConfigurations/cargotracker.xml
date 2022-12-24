@@ -1,0 +1,12 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="cargotracker" type="Liberty" factoryName="Liberty">
+    <option name="buildFile" value="$PROJECT_DIR$/pom.xml" />
+    <module name="cargotracker" />
+    <option name="params" />
+    <method v="2">
+      <option name="BuildArtifacts" enabled="true">
+        <artifact name="cargotracker:war exploded" />
+      </option>
+    </method>
+  </configuration>
+</component>

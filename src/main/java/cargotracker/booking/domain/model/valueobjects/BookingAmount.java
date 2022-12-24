@@ -1,0 +1,23 @@
+package cargotracker.booking.domain.model.valueobjects;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+
+/**
+ * Domain model representation of the Booking Amount for a new Cargo.
+ * Contains the Booking Amount of the Cargo
+ */
+@Embeddable
+public class BookingAmount {
+
+    @Column(name = "booking_amount", unique = true, updatable= false)
+    private Integer bookingAmount;
+
+    public BookingAmount(){}
+
+    public BookingAmount(Integer bookingAmount){this.bookingAmount = bookingAmount;}
+
+    public void setBookingAmount(Integer bookingAmount){this.bookingAmount = bookingAmount;}
+
+    public Integer getBookingAmount(){return this.bookingAmount;}
+}
