@@ -4,7 +4,6 @@ package cargotracker.routing.interfaces.rest;
 import cargotracker.routing.application.internal.queryservices.CargoRoutingQueryService;
 import cargotracker.routing.domain.model.aggregates.Voyage;
 import cargotracker.routing.domain.model.entities.CarrierMovement;
-import cargotracker.routing.domain.model.valueobjects.Schedule;
 import cargotracker.shareddomain.model.TransitEdge;
 import cargotracker.shareddomain.model.TransitPath;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -31,6 +30,7 @@ public class CargoRoutingController {
      * A highly simplistic implementation of the Routing algorithm.
      * It works only with the specifications given in the test case (CNHKG - USNYC and 2019-09-28).
      * The Domain Model can be changed to implement more sophisticated algorithms
+     *
      * @param originUnLocode
      * @param destinationUnLocode
      * @param deadline
@@ -40,9 +40,9 @@ public class CargoRoutingController {
     @Path("/optimalRoute")
     @Produces({"application/json"})
     public TransitPath findOptimalRoute(
-             @QueryParam("origin") String originUnLocode,
-             @QueryParam("destination") String destinationUnLocode,
-             @QueryParam("deadline") String deadline) {
+            @QueryParam("origin") String originUnLocode,
+            @QueryParam("destination") String destinationUnLocode,
+            @QueryParam("deadline") String deadline) {
 
         log.info("Finde optimale Route");
         List<Voyage> voyages = cargoRoutingQueryService.findAll();
@@ -55,9 +55,7 @@ public class CargoRoutingController {
 
             TransitEdge transitEdge = new TransitEdge();
             transitEdge.setVoyageNumber(voyage.getVoyageNumber().getVoyageNumber());
-            Schedule schedule = voyage.getSchedule();
-            List<CarrierMovement> carrierMovements = schedule.getCarrierMovements();
-
+            List<CarrierMovement> carrierMovements = voyage.getSchedule().getCarrierMovements();
             if (!carrierMovements.isEmpty()) {
                 CarrierMovement movement = carrierMovements.get(0);
                 transitEdge.setFromDate(movement.getArrivalDate());

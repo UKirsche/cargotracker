@@ -3,7 +3,7 @@ package cargotracker.routing.domain.model.valueobjects;
 import cargotracker.routing.domain.model.entities.CarrierMovement;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 import lombok.NoArgsConstructor;
 
@@ -19,9 +19,8 @@ public class Schedule {
 
     public static final Schedule EMPTY = new Schedule();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "voyage_number")
-    private List<CarrierMovement> carrierMovements = Collections.emptyList();
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER, mappedBy = "voyage")
+    private List<CarrierMovement> carrierMovements;
 
     Schedule(List<CarrierMovement> carrierMovements) {
         this.carrierMovements = carrierMovements;
