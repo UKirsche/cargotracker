@@ -15,6 +15,10 @@
                   httpPort="9080"
                   httpsPort="9443" />
 
+    com.ibm.ws.logging.console.format=json
+    com.ibm.ws.logging.console.log.level=info
+    com.ibm.ws.logging.console.source=message,trace,accessLog,ffdc,audit
+
     <!-- Automatically expand WAR files and EAR files -->
     <applicationManager autoExpand="true"/>
 
