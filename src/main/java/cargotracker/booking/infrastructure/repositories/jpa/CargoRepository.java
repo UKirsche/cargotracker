@@ -6,6 +6,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -36,8 +37,7 @@ public class CargoRepository {
     public Cargo find(BookingId bookingId) {
         Cargo cargo;
         try {
-            cargo = entityManager.createNamedQuery("Cargo.findByBookingId",
-                    Cargo.class)
+            cargo = entityManager.createNamedQuery("Cargo.findByBookingId", Cargo.class)
                     .setParameter("bookingId", bookingId)
                     .getSingleResult();
         } catch (NoResultException e) {

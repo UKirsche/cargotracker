@@ -4,6 +4,8 @@ import cargotracker.booking.domain.model.commands.BookCargoCommand;
 import cargotracker.booking.domain.model.entities.Location;
 import cargotracker.booking.domain.model.valueobjects.*;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 
 @Entity
@@ -13,8 +15,10 @@ import jakarta.persistence.*;
         @NamedQuery(name = "Cargo.findByBookingId",
                 query = "Select c from Cargo c where c.bookingId = :bookingId"),
         @NamedQuery(name = "Cargo.getAllBookingIds",
-                query = "Select c.bookingId from Cargo c") })
+                query = "Select c.bookingId from Cargo c")})
 @Table(name = "cargo")
+@Getter
+@Setter
 public class Cargo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,42 +61,6 @@ public class Cargo {
         this.delivery = Delivery.derivedFrom(this.routeSpecification,
                 this.itinerary, LastCargoHandledEvent.EMPTY);
     }
-
-    public BookingId getBookingId() {
-        return bookingId;
-    }
-
-    public void setOrigin(Location origin) {
-        this.origin = origin;
-    }
-
-    public Location getOrigin() {
-        return origin;
-    }
-
-    public RouteSpecification getRouteSpecification() {
-        return this.routeSpecification;
-    }
-
-
-    public BookingAmount getBookingAmount(){
-        return this.bookingAmount;
-    }
-
-    public void setBookingAmount(BookingAmount bookingAmount){
-        this.bookingAmount = bookingAmount;
-    }
-    /**
-     * @return The itinerary
-     */
-    public CargoItinerary getItinerary() {
-        return this.itinerary;
-    }
-
-    public void setItinerary(CargoItinerary itinerary){
-        this.itinerary = itinerary;
-    }
-
 
     /**
      * Assigns Route to the Cargo

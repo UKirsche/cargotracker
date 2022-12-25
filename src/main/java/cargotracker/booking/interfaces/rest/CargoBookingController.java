@@ -11,9 +11,11 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import lombok.extern.slf4j.Slf4j;
 
 @Path("/cargobooking")
 @ApplicationScoped
+@Slf4j
 public class CargoBookingController {
 
 
@@ -28,7 +30,7 @@ public class CargoBookingController {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response bookCargo(BookCargoResource bookCargoResource){
-        System.out.println("****Book Cargo"+cargoBookingCommandService);
+        log.info("****Book Cargo{}", cargoBookingCommandService);
         BookingId bookingId  = cargoBookingCommandService.bookCargo(
                 BookCargoCommandDTOAssembler.toCommandFromDTO(bookCargoResource));
 
