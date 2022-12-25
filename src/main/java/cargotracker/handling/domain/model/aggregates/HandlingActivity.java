@@ -5,6 +5,9 @@ import cargotracker.handling.domain.model.valueobjects.CargoBookingId;
 import cargotracker.handling.domain.model.valueobjects.Type;
 import cargotracker.handling.domain.model.valueobjects.VoyageNumber;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.util.Date;
 
 /**
@@ -13,7 +16,9 @@ import java.util.Date;
 @Entity
 @NamedQuery(name = "HandlingEvent.findByBookingId",
         query = "Select e from HandlingActivity e where e.cargoBookingId.bookingId = :bookingId")
-@Table(name="handling_activity")
+@Table(name = "handling_activity")
+@Getter
+@NoArgsConstructor
 public class HandlingActivity {
 
     @Id
@@ -32,8 +37,6 @@ public class HandlingActivity {
 
     @Embedded
     private CargoBookingId cargoBookingId;
-
-    public HandlingActivity(){}
 
 
     /**
@@ -81,25 +84,4 @@ public class HandlingActivity {
         this.cargoBookingId = cargoBookingId;
         this.voyageNumber = null;
     }
-
-
-    public Type getType() {
-        return this.type;
-    }
-
-    public VoyageNumber getVoyage() {
-        return this.voyageNumber;
-    }
-
-    public Date getCompletionTime() {
-        return new Date(this.completionTime.getTime());
-    }
-
-    public Location getLocation() { return this.location; }
-
-    public CargoBookingId getCargoBookingId() {
-        return this.cargoBookingId;
-    }
-
-
 }

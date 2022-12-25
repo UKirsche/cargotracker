@@ -52,21 +52,27 @@ public class CargoRoutingController {
         TransitPath transitPath = new TransitPath();
         List<TransitEdge> transitEdges = new ArrayList<>();
         for (Voyage voyage : voyages) {
-
             TransitEdge transitEdge = new TransitEdge();
             transitEdge.setVoyageNumber(voyage.getVoyageNumber().getVoyageNumber());
             List<CarrierMovement> carrierMovements = voyage.getSchedule().getCarrierMovements();
-            if (!carrierMovements.isEmpty()) {
-                CarrierMovement movement = carrierMovements.get(0);
-                transitEdge.setFromDate(movement.getArrivalDate());
-                transitEdge.setToDate(movement.getDepartureDate());
-                transitEdge.setFromUnLocode(movement.getArrivalLocation().getUnLocCode());
-                transitEdge.setToUnLocode(movement.getDepartureLocation().getUnLocCode());
-                transitEdges.add(transitEdge);
-            }
+            addMovementToTransitEdge(transitEdges, transitEdge, carrierMovements);
         }
 
         transitPath.setTransitEdges(transitEdges);
         return transitPath;
+    }
+
+    /**
+     * @param transitEdges
+     * @param transitEdge
+     * @param carrierMovements
+     */
+    private void addMovementToTransitEdge(List<TransitEdge> transitEdges, TransitEdge transitEdge, List<CarrierMovement> carrierMovements) {
+        CarrierMovement movement = carrierMovements.get(0);
+        transitEdge.setFromDate(movement.getArrivalDate());
+        transitEdge.setToDate(movement.getDepartureDate());
+        transitEdge.setFromUnLocode(movement.getArrivalLocation().getUnLocCode());
+        transitEdge.setToUnLocode(movement.getDepartureLocation().getUnLocCode());
+        transitEdges.add(transitEdge);
     }
 }

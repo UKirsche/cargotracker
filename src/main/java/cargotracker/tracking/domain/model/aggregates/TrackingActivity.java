@@ -9,7 +9,8 @@ import cargotracker.tracking.domain.model.valueobjects.TrackingEventType;
 import cargotracker.tracking.domain.model.valueobjects.TrackingLocation;
 import cargotracker.tracking.domain.model.valueobjects.TrackingVoyageNumber;
 import jakarta.persistence.*;
-import java.util.Date;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 
 @Entity
@@ -20,9 +21,11 @@ import java.util.Date;
                 query = "Select t from TrackingActivity t where t.trackingNumber = :trackingNumber"),
         @NamedQuery(name = "TrackingActivity.getAllTrackingNos",
                 query = "Select t.trackingNumber from TrackingActivity t"),
-        @NamedQuery(name="TrackingActivity.findByBookingNumber",
+        @NamedQuery(name = "TrackingActivity.findByBookingNumber",
                 query = "Select t from TrackingActivity t where t.bookingId = :bookingId")})
-@Table(name="tracking_activity")
+@Table(name = "tracking_activity")
+@NoArgsConstructor
+@Getter
 public class TrackingActivity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,8 +36,6 @@ public class TrackingActivity {
     private TrackingBookingId bookingId;
     @Embedded
     private TrackingActivityEvent trackingActivityEvent;
-
-    public TrackingActivity(){}
 
     /**
      * Creates a new Tracking Number
@@ -63,21 +64,5 @@ public class TrackingActivity {
                 new TrackingEventType(addTrackingEventCommand.getEventType(),addTrackingEventCommand.getEventTime()));
         this.trackingActivityEvent.getTrackingEvents().add(trackingEvent);
     }
-
-    public TrackingNumber getTrackingNumber(){
-        return this.trackingNumber;
-    }
-
-    public TrackingBookingId getBookingId(){
-        return this.bookingId;
-    }
-
-    public TrackingActivityEvent getTrackingActivityEvents() {
-        return this.trackingActivityEvent;
-    }
-
-
-
-
 
 }
