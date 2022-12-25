@@ -1,13 +1,16 @@
 package cargotracker.tracking.domain.model.valueobjects;
 
 import jakarta.persistence.*;
-import java.util.Date;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * Tracking Event Details
  */
 @Entity
-@Table(name="tracking_handling_events")
+@Table(name = "tracking_handling_events")
+@Getter
+@NoArgsConstructor
 public class TrackingEvent {
 
     @Id
@@ -20,8 +23,6 @@ public class TrackingEvent {
     @Embedded
     private TrackingEventType trackingEventType;
 
-    public TrackingEvent(){}
-
     public TrackingEvent(
             TrackingVoyageNumber trackingVoyageNumber,
             TrackingLocation trackingLocation,
@@ -30,10 +31,5 @@ public class TrackingEvent {
         this.trackingVoyageNumber = trackingVoyageNumber;
         this.trackingLocation = trackingLocation;
     }
-
-
-    public TrackingVoyageNumber getTrackingVoyageNumber(){return this.trackingVoyageNumber;}
-    public TrackingLocation getTrackingLocation(){return this.trackingLocation;}
-    public TrackingEventType getTrackingEventType(){return this.trackingEventType;}
 
 }
