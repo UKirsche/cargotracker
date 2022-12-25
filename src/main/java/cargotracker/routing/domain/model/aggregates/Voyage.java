@@ -6,6 +6,7 @@ import cargotracker.routing.domain.model.valueobjects.VoyageNumber;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
@@ -15,6 +16,7 @@ import lombok.Setter;
         @NamedQuery(name = "Voyage.findAll", query = "Select v from Voyage v order by v.voyageNumber.voyageNumber")})
 @Getter
 @Setter
+@NoArgsConstructor
 public class Voyage {
 
     @Id
@@ -27,9 +29,6 @@ public class Voyage {
 
     @Embedded
     private VoyageNumber voyageNumber;
-
-    public Voyage() {
-    }
 
     public Voyage(VoyageNumber voyageNumber, Schedule schedule) {
         this.schedule = schedule;

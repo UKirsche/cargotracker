@@ -1,10 +1,15 @@
 package cargotracker.handling.domain.model.commands;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Date;
 
 /**
  * Command to Register an Handling Activity
  */
+@Getter
+@Setter
 public class HandlingActivityRegistrationCommand {
 
     private Date completionTime;
@@ -19,45 +24,5 @@ public class HandlingActivityRegistrationCommand {
         this.setVoyageNumber(voyageNumber);
         this.setUnLocode(unLocode);
         this.setHandlingType(handlingType);
-    }
-
-    public Date getCompletionTime() {
-        return completionTime;
-    }
-
-    public void setCompletionTime(Date completionTime) {
-        this.completionTime = completionTime;
-    }
-
-    public String getBookingId() {
-        return bookingId;
-    }
-
-    public void setBookingId(String bookingId) {
-        this.bookingId = bookingId;
-    }
-
-    public String getVoyageNumber() {
-        return voyageNumber;
-    }
-
-    public void setVoyageNumber(String voyageNumber) {
-        this.voyageNumber = voyageNumber;
-    }
-
-    public String getUnLocode() {
-        return unLocode;
-    }
-
-    public void setUnLocode(String unLocode) {
-        this.unLocode = unLocode;
-    }
-
-    public String getHandlingType() {
-        return handlingType;
-    }
-
-    public void setHandlingType(String handlingType) {
-        this.handlingType = handlingType;
     }
 }

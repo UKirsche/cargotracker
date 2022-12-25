@@ -3,13 +3,21 @@ package cargotracker.booking.domain.model.valueobjects;
 
 import cargotracker.booking.domain.model.entities.Location;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.Date;
 
 /**
- * Domain class which tracks the progress of the Cargo against the Route Specification / Itinerary and Handling Events.
+ * Domain class which tracks the progress of the Cargo against the
+ * Route Specification / Itinerary and Handling Events.
  */
 
 @Embeddable
+@Getter
+@Setter
+@NoArgsConstructor
 public class Delivery {
 
     public static final Date ETA_UNKOWN = null;
@@ -35,11 +43,6 @@ public class Delivery {
     public static final CargoHandlingActivity NO_ACTIVITY = new CargoHandlingActivity();
     @Embedded
     private CargoHandlingActivity nextExpectedActivity;
-
-
-    public Delivery() {
-        // Nothing to initialize
-    }
 
     public Delivery(LastCargoHandledEvent lastEvent, CargoItinerary itinerary,
                     RouteSpecification routeSpecification) {
@@ -67,6 +70,7 @@ public class Delivery {
     }
 
     /**
+     * Creator für Delivery
      *
      * @param routeSpecification
      * @param itinerary
@@ -119,9 +123,6 @@ public class Delivery {
             default:
                 return TransportStatus.UNKNOWN;
         }
-
-
-
     }
 
     /**
@@ -147,21 +148,4 @@ public class Delivery {
             return null;
         }
     }
-
-
-    public RoutingStatus getRoutingStatus() { return this.routingStatus;}
-    public TransportStatus getTransportStatus() { return this.transportStatus;}
-    public Location getLastKnownLocation() {
-        return this.lastKnownLocation;
-    }
-    public void setLastKnownLocation(Location lastKnownLocation) {
-        this.lastKnownLocation = lastKnownLocation;
-    }
-    public void setLastEvent(LastCargoHandledEvent lastEvent) {
-        this.lastEvent = lastEvent;
-    }
-    public Voyage getCurrentVoyage() {
-        return this.currentVoyage;
-    }
-
 }

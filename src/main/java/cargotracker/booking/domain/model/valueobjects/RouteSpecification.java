@@ -4,9 +4,14 @@ package cargotracker.booking.domain.model.valueobjects;
 import cargotracker.booking.domain.model.entities.Location;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.util.Date;
 
 @Embeddable
+@NoArgsConstructor
+@Getter
 public class RouteSpecification {
     private static final long serialVersionUID = 1L;
     @Embedded
@@ -19,9 +24,6 @@ public class RouteSpecification {
     @Column(name = "spec_arrival_deadline")
     @NotNull
     private Date arrivalDeadline;
-
-    public RouteSpecification() {
-    }
 
     /**
      * @param origin origin location - can't be the same as the destination
@@ -36,18 +38,4 @@ public class RouteSpecification {
         this.destination = destination;
         this.arrivalDeadline = (Date) arrivalDeadline.clone();
     }
-
-    public Location getOrigin() {
-        return origin;
-    }
-
-    public Location getDestination() {
-        return destination;
-    }
-
-    public Date getArrivalDeadline() {
-        return new Date(arrivalDeadline.getTime());
-    }
-
-
 }
