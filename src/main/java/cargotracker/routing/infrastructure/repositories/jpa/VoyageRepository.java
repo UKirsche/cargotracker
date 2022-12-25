@@ -7,6 +7,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -39,8 +40,14 @@ public class VoyageRepository {
      * @return
      */
     public List<Voyage> findAll() {
-        return entityManager.createNamedQuery("Voyage.findAll", Voyage.class)
-                .getResultList();
+        List<Voyage> resultList = new ArrayList<>();
+        try {
+            resultList = entityManager.createNamedQuery("Voyage.findAll", Voyage.class).getResultList();
+
+        } catch (Exception ex) {
+            System.err.println("Fehler beim Abrufen der Voyages" + ex.getMessage());
+        }
+        return resultList;
     }
 
 

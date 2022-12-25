@@ -4,6 +4,7 @@ package cargotracker.routing.interfaces.rest;
 import cargotracker.routing.application.internal.queryservices.CargoRoutingQueryService;
 import cargotracker.routing.domain.model.aggregates.Voyage;
 import cargotracker.routing.domain.model.entities.CarrierMovement;
+import cargotracker.routing.domain.model.valueobjects.Schedule;
 import cargotracker.shareddomain.model.TransitEdge;
 import cargotracker.shareddomain.model.TransitPath;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -16,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Path("/voyageRouting")
 @ApplicationScoped
@@ -44,27 +46,29 @@ public class CargoRoutingController {
 
         log.info("Finde optimale Route");
         List<Voyage> voyages = cargoRoutingQueryService.findAll();
-        System.out.println("***Voyages are****"+voyages.size());
+        if (Objects.nonNull(voyages)) {
+            System.out.println("***Voyages are****" + voyages.size());
+        }
         TransitPath transitPath = new TransitPath();
         List<TransitEdge> transitEdges = new ArrayList<>();
-        for(Voyage voyage:voyages){
+        for (Voyage voyage : voyages) {
 
             TransitEdge transitEdge = new TransitEdge();
             transitEdge.setVoyageNumber(voyage.getVoyageNumber().getVoyageNumber());
-            List<CarrierMovement> carrierMovements = voyage.getSchedule().getCarrierMovements();
+            Schedule schedule = voyage.getSchedule();
+            List<CarrierMovement> carrierMovements = schedule.getCarrierMovements();
 
-            CarrierMovement movement =
-                    ((List<CarrierMovement>)voyage.getSchedule().getCarrierMovements()).get(0);
-            transitEdge.setFromDate(movement.getArrivalDate());
-            transitEdge.setToDate(movement.getDepartureDate());
-            transitEdge.setFromUnLocode(movement.getArrivalLocation().getUnLocCode());
-            transitEdge.setToUnLocode(movement.getDepartureLocation().getUnLocCode());
-            transitEdges.add(transitEdge);
-
+            if (!carrierMovements.isEmpty()) {
+                CarrierMovement movement = carrierMovements.get(0);
+                transitEdge.setFromDate(movement.getArrivalDate());
+                transitEdge.setToDate(movement.getDepartureDate());
+                transitEdge.setFromUnLocode(movement.getArrivalLocation().getUnLocCode());
+                transitEdge.setToUnLocode(movement.getDepartureLocation().getUnLocCode());
+                transitEdges.add(transitEdge);
+            }
         }
 
         transitPath.setTransitEdges(transitEdges);
         return transitPath;
-
     }
 }

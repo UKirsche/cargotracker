@@ -3,10 +3,15 @@ package cargotracker.routing.domain.model.entities;
 
 import cargotracker.booking.domain.model.entities.Location;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.util.Date;
 
 @Entity
-@Table(name="carrier_movement")
+@Table(name = "carrier_movement")
+@Getter
+@NoArgsConstructor
 public class CarrierMovement {
 
     @Id
@@ -20,11 +25,10 @@ public class CarrierMovement {
     private Date departureDate;
     @Embedded
     private Location arrivalLocation;
+
     @Embedded
     @AttributeOverride(name = "unLocCode", column = @Column(name = "departure_location_id"))
     private Location departureLocation;
-
-    public CarrierMovement(){}
 
     public CarrierMovement(Location departureLocation,
                            Location arrivalLocation, Date departureDate, Date arrivalDate) {
@@ -34,22 +38,5 @@ public class CarrierMovement {
         this.departureLocation = departureLocation;
         this.arrivalLocation = arrivalLocation;
     }
-
-    public Location getDepartureLocation() {
-        return departureLocation;
-    }
-
-    public Location getArrivalLocation() {
-        return arrivalLocation;
-    }
-
-    public Date getDepartureDate() {
-        return this.departureDate;
-    }
-
-    public Date getArrivalDate() {
-        return this.arrivalDate;
-    }
-
 
 }
