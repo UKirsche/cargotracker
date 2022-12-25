@@ -8,12 +8,18 @@ import cargotracker.shareddomain.model.TransitEdge;
 import cargotracker.shareddomain.model.TransitPath;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.*;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.ArrayList;
 import java.util.List;
 
 @Path("/voyageRouting")
 @ApplicationScoped
+@Slf4j
 public class CargoRoutingController {
 
     @Inject
@@ -36,6 +42,7 @@ public class CargoRoutingController {
              @QueryParam("destination") String destinationUnLocode,
              @QueryParam("deadline") String deadline) {
 
+        log.info("Finde optimale Route");
         List<Voyage> voyages = cargoRoutingQueryService.findAll();
         System.out.println("***Voyages are****"+voyages.size());
         TransitPath transitPath = new TransitPath();
