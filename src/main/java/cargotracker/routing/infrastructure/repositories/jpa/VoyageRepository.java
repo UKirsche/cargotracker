@@ -1,13 +1,11 @@
 package cargotracker.routing.infrastructure.repositories.jpa;
 
 
-
 import cargotracker.routing.domain.model.aggregates.Voyage;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -28,6 +26,7 @@ public class VoyageRepository {
 
     /**
      * Stores the Voyage Aggregate
+     *
      * @param voyage
      */
     public void store(Voyage voyage) {
@@ -37,17 +36,11 @@ public class VoyageRepository {
 
     /**
      * Find all Voyage Aggregates
+     *
      * @return
      */
     public List<Voyage> findAll() {
-        List<Voyage> resultList = new ArrayList<>();
-        try {
-            resultList = entityManager.createNamedQuery("Voyage.findAll", Voyage.class).getResultList();
-
-        } catch (Exception ex) {
-            System.err.println("Fehler beim Abrufen der Voyages" + ex.getMessage());
-        }
-        return resultList;
+        return entityManager.createNamedQuery("Voyage.findAll", Voyage.class).getResultList();
     }
 
 
