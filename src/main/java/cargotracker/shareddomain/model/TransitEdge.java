@@ -1,5 +1,9 @@
 package cargotracker.shareddomain.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -7,6 +11,9 @@ import java.util.Date;
  * Represents an edge in a path through a graph, describing the route of a
  * cargo.
  */
+@Getter
+@Setter
+@NoArgsConstructor
 public class TransitEdge implements Serializable {
 
     private String voyageNumber;
@@ -15,9 +22,6 @@ public class TransitEdge implements Serializable {
     private Date fromDate;
     private Date toDate;
 
-    public TransitEdge() {
-        // Nothing to do.
-    }
 
     public TransitEdge(String voyageNumber, String fromUnLocode,
             String toUnLocode, Date fromDate, Date toDate) {
@@ -27,47 +31,6 @@ public class TransitEdge implements Serializable {
         this.fromDate = fromDate;
         this.toDate = toDate;
     }
-
-    public String getVoyageNumber() {
-        return voyageNumber;
-    }
-
-    public void setVoyageNumber(String voyageNumber) {
-        this.voyageNumber = voyageNumber;
-    }
-
-    public String getFromUnLocode() {
-        return fromUnLocode;
-    }
-
-    public void setFromUnLocode(String fromUnLocode) {
-        this.fromUnLocode = fromUnLocode;
-    }
-
-    public String getToUnLocode() {
-        return toUnLocode;
-    }
-
-    public void setToUnLocode(String toUnLocode) {
-        this.toUnLocode = toUnLocode;
-    }
-
-    public Date getFromDate() {
-        return fromDate;
-    }
-
-    public void setFromDate(Date fromDate) {
-        this.fromDate = fromDate;
-    }
-
-    public Date getToDate() {
-        return toDate;
-    }
-
-    public void setToDate(Date toDate) {
-        this.toDate = toDate;
-    }
-
     @Override
     public String toString() {
         return "TransitEdge{" + "voyageNumber=" + voyageNumber

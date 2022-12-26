@@ -16,7 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Path("/voyageRouting")
 @ApplicationScoped
@@ -46,16 +45,18 @@ public class CargoRoutingController {
 
         log.info("Finde optimale Route");
         List<Voyage> voyages = cargoRoutingQueryService.findAll();
-        if (Objects.nonNull(voyages)) {
-            System.out.println("***Voyages are****" + voyages.size());
-        }
+        System.out.println("***Voyages are****" + voyages.size());
+        TransitPath transitPath = getTransitPath(voyages);
+        return transitPath;
+    }
+
+    private TransitPath getTransitPath(List<Voyage> voyages) {
         TransitPath transitPath = new TransitPath();
         List<TransitEdge> transitEdges = new ArrayList<>();
         for (Voyage voyage : voyages) {
             TransitEdge transitEdge = new TransitEdge();
             transitEdge.setVoyageNumber(voyage.getVoyageNumber().getVoyageNumber());
-            List<CarrierMovement> carrierMovements = voyage.getSchedule().getCarrierMovements();
-            addMovementToTransitEdge(transitEdges, transitEdge, carrierMovements);
+            addMovementToTransitEdge(transitEdges, transitEdge, voyage.getSchedule().getCarrierMovements());
         }
 
         transitPath.setTransitEdges(transitEdges);
