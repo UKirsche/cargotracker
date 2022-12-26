@@ -13,6 +13,7 @@ import lombok.Setter;
 @Setter
 public class Location {
 
+    //Identifier for Entity
     @Column(name = "origin_id")
     private String unLocCode;
     public Location(){}

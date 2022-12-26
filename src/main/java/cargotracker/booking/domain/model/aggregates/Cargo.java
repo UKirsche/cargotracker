@@ -28,7 +28,7 @@ public class Cargo {
     @Embedded
     private BookingAmount bookingAmount; //Booking Amount
     @Embedded
-    private Location origin; //Origin Location of the Cargo
+    private Location origin; //Origin Location of the Cargo-> Entity
     @Embedded
     private RouteSpecification routeSpecification; //Route Specification of the Cargo
     @Embedded
