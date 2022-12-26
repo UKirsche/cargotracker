@@ -16,7 +16,6 @@ public class TrackingDetailsCommandEventAssembler {
      */
     public static AssignTrackingNumberCommand toCommandFromEvent(CargoRoutedEvent cargoRoutedEvent){
         System.out.println("****cargoRoutedEvent****"+cargoRoutedEvent.getContent().getBookingId());
-        return new AssignTrackingNumberCommand(
-                                   cargoRoutedEvent.getContent().getBookingId(),"");
+        return new AssignTrackingNumberCommand(cargoRoutedEvent.getContent().getBookingId(), "");
     }
 }

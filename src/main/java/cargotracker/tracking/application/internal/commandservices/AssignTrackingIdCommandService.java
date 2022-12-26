@@ -25,9 +25,8 @@ public class AssignTrackingIdCommandService {
      * @return Tracking Number of the Cargo
      */
     @Transactional // Inititate the Transaction
-    public TrackingNumber assignTrackingNumberToCargo(AssignTrackingNumberCommand assignTrackingNumberCommand){
-        String trackingNumber = trackingRepository.nextTrackingNumber();
-        assignTrackingNumberCommand.setTrackingNumber(trackingNumber);
+    public TrackingNumber assignTrackingNumberToCargo(AssignTrackingNumberCommand assignTrackingNumberCommand) {
+        String trackingNumber = getTrackingNumber(assignTrackingNumberCommand);
         TrackingActivity activity = new TrackingActivity(assignTrackingNumberCommand);
         System.out.println("***Going to store in repository");
         trackingRepository.store(activity); //Store the Cargo
@@ -35,12 +34,19 @@ public class AssignTrackingIdCommandService {
         return new TrackingNumber(trackingNumber);
     }
 
+    private String getTrackingNumber(AssignTrackingNumberCommand assignTrackingNumberCommand) {
+        String trackingNumber = trackingRepository.nextTrackingNumber();
+        assignTrackingNumberCommand.setTrackingNumber(trackingNumber);
+        return trackingNumber;
+    }
+
     /**
      * Service Command method to assign a route to a Cargo
+     *
      * @param addTrackingEventCommand
      */
     @Transactional
-    public void addTrackingEvent(AddTrackingEventCommand addTrackingEventCommand){
+    public void addTrackingEvent(AddTrackingEventCommand addTrackingEventCommand) {
         TrackingActivity trackingActivity = trackingRepository.findByBookingId(
                 new TrackingBookingId(addTrackingEventCommand.getBookingId()));
 

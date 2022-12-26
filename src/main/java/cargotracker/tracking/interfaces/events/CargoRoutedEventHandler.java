@@ -14,10 +14,10 @@ public class CargoRoutedEventHandler {
     @Inject
     private AssignTrackingIdCommandService assignTrackingIdCommandService; // Application Service Dependency
 
-
     /**
      * Cargo Routed Event Handler Method
-     * @param event
+     *
+     * @param event EventHandler hört auf CargoRouted
      */
 
     @Transactional
