@@ -1,4 +1,4 @@
-# Jakarta EE 8 Implementation utilizing Open Liberty
+# Jakarta EE 9 Implementation utilizing Open Liberty 22.0.0.13
 
 This Chapter contains a complete DDD implementation of the Cargo Tracker application based on the Jakarta EE Platform
 utilizing
