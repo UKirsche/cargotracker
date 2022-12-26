@@ -61,8 +61,7 @@ public class CargoBookingCommandService {
     public void assignRouteToCargo(RouteCargoCommand routeCargoCommand){
         Cargo cargo = cargoRepository.find(new BookingId(routeCargoCommand.getCargoBookingId()));
 
-        CargoItinerary cargoItinerary = externalCargoRoutingService
-                .fetchRouteForSpecification(cargo.getRouteSpecification());
+        CargoItinerary cargoItinerary = externalCargoRoutingService.fetchRouteForSpecification(cargo.getRouteSpecification());
 
         cargo.assignToRoute(cargoItinerary);
         cargoRepository.store(cargo);

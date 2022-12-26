@@ -10,8 +10,10 @@ import cargotracker.shareddomain.model.TransitEdge;
 import cargotracker.shareddomain.model.TransitPath;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Anti Corruption Service Class
@@ -28,18 +30,18 @@ public class ExternalCargoRoutingService {
      * @param routeSpecification
      * @return
      */
-    public CargoItinerary fetchRouteForSpecification(RouteSpecification routeSpecification){
+    public CargoItinerary fetchRouteForSpecification(RouteSpecification routeSpecification) {
 
         TransitPath transitPath = externalCargoRoutingClient.findOptimalRoute(
                 routeSpecification.getOrigin().getUnLocCode(),
                 routeSpecification.getDestination().getUnLocCode(),
                 routeSpecification.getArrivalDeadline().toString()
-                );
+        );
 
-        List<Leg> legs = new ArrayList<Leg>(transitPath.getTransitEdges().size());
-        for (TransitEdge edge : transitPath.getTransitEdges()) {
-            legs.add(toLeg(edge));
-        }
+        List<Leg> legs = transitPath.getTransitEdges()
+                .stream()
+                .map(this::toLeg)
+                .collect(Collectors.toCollection(() -> new ArrayList<>(transitPath.getTransitEdges().size())));
 
         return new CargoItinerary(legs);
 
