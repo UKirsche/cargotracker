@@ -58,7 +58,7 @@ public class CargoBookingCommandService {
      * @param routeCargoCommand
      */
     @Transactional
-    public void assignRouteToCargo(RouteCargoCommand routeCargoCommand){
+    public void assignRouteToCargo(RouteCargoCommand routeCargoCommand) {
         Cargo cargo = cargoRepository.find(new BookingId(routeCargoCommand.getCargoBookingId()));
 
         CargoItinerary cargoItinerary = externalCargoRoutingService.fetchRouteForSpecification(cargo.getRouteSpecification());
@@ -66,11 +66,16 @@ public class CargoBookingCommandService {
         cargo.assignToRoute(cargoItinerary);
         cargoRepository.store(cargo);
 
+        CargoRoutedEvent cargoRoutedEvent = getCargoRoutedEvent(routeCargoCommand);
+        cargoRoutedEventControl.fire(cargoRoutedEvent);
+    }
+
+    private CargoRoutedEvent getCargoRoutedEvent(RouteCargoCommand routeCargoCommand) {
         CargoRoutedEvent cargoRoutedEvent = new CargoRoutedEvent();
         CargoRoutedEventData eventData = new CargoRoutedEventData();
         eventData.setBookingId(routeCargoCommand.getCargoBookingId());
         cargoRoutedEvent.setContent(eventData);
-        cargoRoutedEventControl.fire(cargoRoutedEvent);
+        return cargoRoutedEvent;
     }
 
 

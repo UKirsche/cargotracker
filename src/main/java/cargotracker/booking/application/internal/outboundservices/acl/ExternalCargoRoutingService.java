@@ -38,13 +38,24 @@ public class ExternalCargoRoutingService {
                 routeSpecification.getArrivalDeadline().toString()
         );
 
+        List<Leg> legs = mapTo(transitPath);
+
+        return new CargoItinerary(legs);
+
+    }
+
+    /**
+     * ACL:Maps the Transaitpath to Legs for the relevant Domain -> albeit its a shared Domain.
+     *
+     * @param transitPath Transipath
+     * @return Legs
+     */
+    private List<Leg> mapTo(TransitPath transitPath) {
         List<Leg> legs = transitPath.getTransitEdges()
                 .stream()
                 .map(this::toLeg)
                 .collect(Collectors.toCollection(() -> new ArrayList<>(transitPath.getTransitEdges().size())));
-
-        return new CargoItinerary(legs);
-
+        return legs;
     }
 
     /**

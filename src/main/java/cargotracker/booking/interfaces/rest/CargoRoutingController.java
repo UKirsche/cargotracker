@@ -26,8 +26,7 @@ public class CargoRoutingController {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response routeCargo(RouteCargoResource routeCargoResource){
-        cargoBookingCommandService.assignRouteToCargo(
-                RouteCargoCommandDTOAssembler.toCommandFromDTO(routeCargoResource));
+        cargoBookingCommandService.assignRouteToCargo(RouteCargoCommandDTOAssembler.toCommandFromDTO(routeCargoResource));
 
         final Response returnValue = Response.ok()
                 .entity("Cargo Routed")
