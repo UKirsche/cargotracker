@@ -1,14 +1,16 @@
 # Jakarta EE 8 Implementation utilizing Open Liberty
 
-This Chapter contains a complete DDD implementation of the Cargo Tracker application based on the Jakarta EE Platform utilizing
-the OpenLiberty (v19.0.0.9) implementation
+This Chapter contains a complete DDD implementation of the Cargo Tracker application based on the Jakarta EE Platform
+utilizing
+the OpenLiberty (v22.0.0.13) implementation
 
 The implementation adopts a modulithic based architectural style and uses the following technologies
-- Jakarta EE v8.0 (WebProfile) as the core chassis
+
+- Jakarta EE v9.1 (WebProfile) as the core chassis
 - CDI Events as the messaging infrastructure which enables loose coupling between the various modules
 - MySql as the underlying Database
 - Single WAR file which contains all the modules
-- OpenLiberty v19.0.0.9 as the runtime which has support for Jakarta EE 8.0
+- OpenLiberty v22.0.0.13 as the runtime which has support for Jakarta EE 9.1
 
 The documentation covers the setup and testing process needed to run the cargotracker monolith correctly.
 

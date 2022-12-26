@@ -77,6 +77,4 @@ public class CargoBookingCommandService {
         cargoRoutedEvent.setContent(eventData);
         return cargoRoutedEvent;
     }
-
-
 }
