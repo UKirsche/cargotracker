@@ -14,6 +14,20 @@ The implementation adopts a modulithic based architectural style and uses the fo
 
 The documentation covers the setup and testing process needed to run the cargotracker monolith correctly.
 
+# Basic Business Logic (Flows)
+
+The Ubiqitous Language (UL) is important to understand the code. Equally important are the sagas or context maps
+that connect the bounded contexts via certain patterns.
+
+## Booking
+
+### UL
+
+More knowledge regarding the domain is found in DDD by Eric Evans (pp. 34).
+
+- Route Specification: start location, end location, arrival date. Blueprint for an itinerary.
+- Cargo Itinerary:
+
 # Test Case
 
 The test case is as follows
