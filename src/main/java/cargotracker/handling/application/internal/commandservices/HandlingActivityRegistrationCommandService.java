@@ -35,8 +35,8 @@ public class HandlingActivityRegistrationCommandService {
                 System.out.println("Handling Voyage Number is" + handlingActivityRegistrationCommand.getVoyageNumber());
                 HandlingActivity handlingActivity = getHandlingActivity(handlingActivityRegistrationCommand);
 
-                handlingActivityRepository.store(handlingActivity);
-                CargoHandledEvent cargoHandledEvent = createCargoHandledEvent(handlingActivityRegistrationCommand);
+                HandlingActivity handlingActivityStored = handlingActivityRepository.store(handlingActivity);
+                CargoHandledEvent cargoHandledEvent = createCargoHandledEvent(handlingActivityRegistrationCommand, handlingActivityStored);
 
                 System.out.println("*****cargohandlede" + handlingActivityRegistrationCommand.getBookingId() + " " + handlingActivityRegistrationCommand.getHandlingType()
                         + " " + handlingActivityRegistrationCommand.getCompletionTime() + " " + handlingActivityRegistrationCommand.getUnLocode());
@@ -80,11 +80,13 @@ public class HandlingActivityRegistrationCommandService {
          * Creates the HandledEvent
          *
          * @param handlingActivityRegistrationCommand Command with relevant fields
+         * @param handlingActivity
          * @return Event
          */
-        private CargoHandledEvent createCargoHandledEvent(HandlingActivityRegistrationCommand handlingActivityRegistrationCommand) {
+        private CargoHandledEvent createCargoHandledEvent(HandlingActivityRegistrationCommand handlingActivityRegistrationCommand, HandlingActivity handlingActivity) {
                 CargoHandledEvent cargoHandledEvent = new CargoHandledEvent();
                 CargoHandledEventData eventData = new CargoHandledEventData();
+                eventData.setHandlingId(handlingActivity.getId().toString());
                 eventData.setBookingId(handlingActivityRegistrationCommand.getBookingId());
                 eventData.setHandlingCompletionTime(handlingActivityRegistrationCommand.getCompletionTime());
                 eventData.setHandlingLocation(handlingActivityRegistrationCommand.getUnLocode());

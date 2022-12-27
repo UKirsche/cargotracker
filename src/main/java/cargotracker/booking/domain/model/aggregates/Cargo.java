@@ -1,6 +1,7 @@
 package cargotracker.booking.domain.model.aggregates;
 
 import cargotracker.booking.domain.model.commands.BookCargoCommand;
+import cargotracker.booking.domain.model.commands.HandlingCargoCommand;
 import cargotracker.booking.domain.model.entities.Location;
 import cargotracker.booking.domain.model.valueobjects.*;
 import jakarta.persistence.*;
@@ -69,7 +70,22 @@ public class Cargo {
      */
     public void assignRoute(CargoItinerary cargoItinerary) {
         this.itinerary = cargoItinerary;
+        //update Routing Status
+        delivery.setRoutingStatus(this.delivery.calculateRoutingStatus(itinerary, routeSpecification));
     }
 
 
+    /**
+     * After the cargo has been handled, the last event as well as the delivery-info must be updated.
+     *
+     * @param handlingCargoCommand
+     */
+    public void updateDelivery(HandlingCargoCommand handlingCargoCommand) {
+        delivery.setLastEvent(new LastCargoHandledEvent(
+                Integer.valueOf(handlingCargoCommand.getHandlingId()),
+                handlingCargoCommand.getHandlingType(),
+                handlingCargoCommand.getHandlingVoyage(),
+                handlingCargoCommand.getHandlingLocation()));
+        delivery.setTransportStatus(delivery.calculateTransportStatus());
+    }
 }

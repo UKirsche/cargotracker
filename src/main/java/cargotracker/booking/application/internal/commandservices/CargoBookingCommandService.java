@@ -4,6 +4,7 @@ import cargotracker.booking.application.internal.outboundservices.acl.ExternalCa
 import cargotracker.booking.domain.model.aggregates.BookingId;
 import cargotracker.booking.domain.model.aggregates.Cargo;
 import cargotracker.booking.domain.model.commands.BookCargoCommand;
+import cargotracker.booking.domain.model.commands.HandlingCargoCommand;
 import cargotracker.booking.domain.model.commands.RouteCargoCommand;
 import cargotracker.booking.domain.model.valueobjects.CargoItinerary;
 import cargotracker.booking.infrastructure.repositories.jpa.CargoRepository;
@@ -69,6 +70,17 @@ public class CargoBookingCommandService {
 
         CargoRoutedEvent cargoRoutedEvent = getCargoRoutedEvent(routeCargoCommand);
         cargoRoutedEventControl.fire(cargoRoutedEvent);
+    }
+
+    /**
+     * Updates the cargo delivery information
+     *
+     * @param handlingCargoCommand
+     */
+    public void updateCargoForHandling(HandlingCargoCommand handlingCargoCommand) {
+        Cargo cargo = cargoRepository.find(new BookingId(handlingCargoCommand.getBookingId()));
+        cargo.updateDelivery(handlingCargoCommand);
+        cargoRepository.store(cargo);
     }
 
     private CargoRoutedEvent getCargoRoutedEvent(RouteCargoCommand routeCargoCommand) {

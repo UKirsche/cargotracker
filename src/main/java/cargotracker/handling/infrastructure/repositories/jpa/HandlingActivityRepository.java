@@ -14,12 +14,15 @@ public class HandlingActivityRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public void store(HandlingActivity handlingActivity) {
-        entityManager.persist(handlingActivity);
+    public HandlingActivity store(HandlingActivity handlingActivity) {
+        HandlingActivity stored = entityManager.merge(handlingActivity);
+        entityManager.flush();
+        return stored;
     }
 
     /**
      * Get the entire handling history for a Cargo
+     *
      * @param bookingId
      * @return
      */

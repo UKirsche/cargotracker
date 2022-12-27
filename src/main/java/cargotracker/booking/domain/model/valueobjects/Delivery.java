@@ -69,6 +69,7 @@ public class Delivery {
         return new Delivery(this.lastEvent, itinerary, routeSpecification);
     }
 
+
     /**
      * Creator für Delivery
      *
@@ -93,8 +94,8 @@ public class Delivery {
      * @param routeSpecification
      * @return
      */
-    private RoutingStatus calculateRoutingStatus(CargoItinerary itinerary,
-                                                 RouteSpecification routeSpecification) {
+    public RoutingStatus calculateRoutingStatus(CargoItinerary itinerary,
+                                                RouteSpecification routeSpecification) {
         if (itinerary == null || itinerary == CargoItinerary.EMPTY_ITINERARY) {
             return RoutingStatus.NOT_ROUTED;
         } else {
@@ -104,9 +105,10 @@ public class Delivery {
 
     /**
      * Method to calculate the Transposrt Status of a Cargo
+     *
      * @return
      */
-    private TransportStatus calculateTransportStatus() {
+    public TransportStatus calculateTransportStatus() {
         if (lastEvent.getHandlingEventType() == null) {
             return TransportStatus.NOT_RECEIVED;
         }
