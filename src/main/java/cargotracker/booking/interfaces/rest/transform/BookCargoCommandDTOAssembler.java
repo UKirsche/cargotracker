@@ -8,7 +8,8 @@ public class BookCargoCommandDTOAssembler {
 
     /**
      * Static method within the Assembler class
-     * @param bookCargoResource
+     *
+     * @param bookCargoResource from the Rest Resource
      * @return BookCargoCommand Model
      */
     public static BookCargoCommand toCommandFromDTO(BookCargoResource bookCargoResource){

@@ -35,7 +35,8 @@ public class CargoBookingCommandService {
     private ExternalCargoRoutingService externalCargoRoutingService;
 
     /**
-     * Service Command method to book a new Cargo
+     * Service Command method to book a cargo via the {@link BookCargoCommand}
+     *
      * @return BookingId of the Cargo
      */
     @Transactional // Inititate the Transaction
@@ -48,8 +49,6 @@ public class CargoBookingCommandService {
         CargoBookedEvent cargoBookedEvent = new CargoBookedEvent();
         cargoBookedEvent.setId(bookingId); //Set the content of the event
         cargoBookedEventControl.fire(cargoBookedEvent);
-
-
         return new BookingId(bookingId);
     }
 

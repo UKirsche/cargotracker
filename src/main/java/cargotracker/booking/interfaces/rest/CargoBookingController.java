@@ -31,8 +31,8 @@ public class CargoBookingController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response bookCargo(BookCargoResource bookCargoResource){
         log.info("****Book Cargo{}", cargoBookingCommandService);
-        BookingId bookingId = cargoBookingCommandService
-                .bookCargo(BookCargoCommandDTOAssembler.toCommandFromDTO(bookCargoResource));
+        System.out.println("***Book Cargo to " + bookCargoResource.getDestLocation());
+        BookingId bookingId = cargoBookingCommandService.bookCargo(BookCargoCommandDTOAssembler.toCommandFromDTO(bookCargoResource));
 
         final Response returnValue = Response.ok()
                 .entity(bookingId)

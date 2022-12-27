@@ -1,18 +1,24 @@
 package cargotracker.booking.interfaces.rest.dto;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.time.LocalDate;
 
 /**
- * Resource class for the Book Cargo Command API
+ * Resource class for the Book Cargo Command API.
+ * Contains Routespecification and amount.
  */
+@Getter
+@Setter
+@NoArgsConstructor
 public class BookCargoResource {
 
     private int bookingAmount;
     private String originLocation;
     private String destLocation;
     private LocalDate destArrivalDeadline;
-
-    public BookCargoResource(){}
 
     public BookCargoResource(int bookingAmount,
                              String originLocation, String destLocation, LocalDate destArrivalDeadline){
@@ -22,27 +28,4 @@ public class BookCargoResource {
         this.destLocation = destLocation;
         this.destArrivalDeadline = destArrivalDeadline;
     }
-
-
-    public void setBookingAmount(int bookingAmount){
-        this.bookingAmount = bookingAmount;
-    }
-
-
-    public int getBookingAmount(){
-        return this.bookingAmount;
-    }
-
-    public String getOriginLocation() {return originLocation; }
-
-    public void setOriginLocation(String originLocation) {this.originLocation = originLocation; }
-
-    public String getDestLocation() { return destLocation; }
-
-    public void setDestLocation(String destLocation) { this.destLocation = destLocation; }
-
-    public LocalDate getDestArrivalDeadline() { return destArrivalDeadline; }
-
-    public void setDestArrivalDeadline(LocalDate destArrivalDeadline) { this.destArrivalDeadline = destArrivalDeadline; }
-
 }

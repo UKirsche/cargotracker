@@ -44,8 +44,8 @@ public class Cargo {
 
     /**
      * Constructor Command Handler for a new Cargo booking. Sets the state of the Aggregate
-     * and registers the Cargo Booked Event
-     *
+     * and registers the Cargo Booked Event.
+     * Contains the domain rich information, i.e. the {@link RouteSpecification} and the {@link Delivery}.
      */
     public Cargo(BookCargoCommand bookCargoCommand) {
 
