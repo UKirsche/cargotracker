@@ -1,7 +1,7 @@
 package cargotracker.handling.domain.model.aggregates;
 
-import cargotracker.booking.domain.model.entities.Location;
 import cargotracker.handling.domain.model.valueobjects.CargoBookingId;
+import cargotracker.handling.domain.model.valueobjects.Location;
 import cargotracker.handling.domain.model.valueobjects.Type;
 import cargotracker.handling.domain.model.valueobjects.VoyageNumber;
 import jakarta.persistence.*;

@@ -7,6 +7,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
+import org.eclipse.persistence.exceptions.DatabaseException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,17 +57,20 @@ public class TrackingRepository {
      * @return
      */
     public TrackingActivity findByBookingId(TrackingBookingId bookingId) {
-        TrackingActivity trackingActivity;
+        List<TrackingActivity> trackingActivity = null;
         try {
             trackingActivity = entityManager.createNamedQuery("TrackingActivity.findByBookingNumber",
-                    TrackingActivity.class)
-                    .setParameter("bookingId", bookingId)
-                    .getSingleResult();
+                            TrackingActivity.class)
+                    .setParameter("bookingId", bookingId.getBookingId())
+                    .getResultList();
+
         } catch (NoResultException e) {
             logger.log(Level.FINE, "Find called on non-existant Booking ID.", e);
             trackingActivity = null;
+        } catch (DatabaseException dbe) {
+            logger.log(Level.FINE, "DB Exception.", dbe);
         }
-        return trackingActivity;
+        return trackingActivity.get(0);
     }
 
     /**

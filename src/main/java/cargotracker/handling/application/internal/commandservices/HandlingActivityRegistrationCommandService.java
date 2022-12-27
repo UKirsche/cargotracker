@@ -1,9 +1,9 @@
 package cargotracker.handling.application.internal.commandservices;
 
-import cargotracker.booking.domain.model.entities.Location;
 import cargotracker.handling.domain.model.aggregates.HandlingActivity;
 import cargotracker.handling.domain.model.commands.HandlingActivityRegistrationCommand;
 import cargotracker.handling.domain.model.valueobjects.CargoBookingId;
+import cargotracker.handling.domain.model.valueobjects.Location;
 import cargotracker.handling.domain.model.valueobjects.Type;
 import cargotracker.handling.domain.model.valueobjects.VoyageNumber;
 import cargotracker.handling.infrastructure.repositories.jpa.HandlingActivityRepository;
@@ -32,25 +32,25 @@ public class HandlingActivityRegistrationCommandService {
         @Transactional
         public void registerHandlingActivityService(HandlingActivityRegistrationCommand handlingActivityRegistrationCommand){
                 System.out.println("Handling Voyage Number is"+handlingActivityRegistrationCommand.getVoyageNumber());
+                HandlingActivity handlingActivity;
                 if(!handlingActivityRegistrationCommand.getVoyageNumber().equals("")) {
-                        HandlingActivity handlingActivity = new HandlingActivity(
+                        handlingActivity = new HandlingActivity(
                                 new CargoBookingId(handlingActivityRegistrationCommand.getBookingId()),
                                 handlingActivityRegistrationCommand.getCompletionTime(),
                                 Type.valueOf(handlingActivityRegistrationCommand.getHandlingType()),
                                 new Location(handlingActivityRegistrationCommand.getUnLocode()),
                                 new VoyageNumber(handlingActivityRegistrationCommand.getVoyageNumber()));
-                        handlingActivityRepository.store(handlingActivity);
 
 
-                }else{
-                        HandlingActivity handlingActivity = new HandlingActivity(
+                } else {
+                        handlingActivity = new HandlingActivity(
                                 new CargoBookingId(handlingActivityRegistrationCommand.getBookingId()),
                                 handlingActivityRegistrationCommand.getCompletionTime(),
                                 Type.valueOf(handlingActivityRegistrationCommand.getHandlingType()),
                                 new Location(handlingActivityRegistrationCommand.getUnLocode()));
-                        handlingActivityRepository.store(handlingActivity);
                 }
 
+                handlingActivityRepository.store(handlingActivity);
 
                 CargoHandledEvent cargoHandledEvent = new CargoHandledEvent();
                 CargoHandledEventData eventData = new CargoHandledEventData();
@@ -60,7 +60,7 @@ public class HandlingActivityRegistrationCommandService {
                 eventData.setHandlingType(handlingActivityRegistrationCommand.getHandlingType());
                 eventData.setVoyageNumber(handlingActivityRegistrationCommand.getVoyageNumber());
 
-                System.out.println("***Event Data ***"+eventData);
+                System.out.println("***Event Data ***" + eventData);
                 cargoHandledEvent.setContent(eventData);
 
                 System.out.println("*****cargohandlede"+handlingActivityRegistrationCommand.getBookingId()+ " " + handlingActivityRegistrationCommand.getHandlingType()

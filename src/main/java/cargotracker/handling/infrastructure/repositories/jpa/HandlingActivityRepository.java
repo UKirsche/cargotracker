@@ -25,7 +25,7 @@ public class HandlingActivityRepository {
      */
     public HandlingActivityHistory lookupHandlingHistoryOfCargo(String bookingId) {
         return new HandlingActivityHistory(entityManager.createNamedQuery(
-                "HandlingActivity.findByBookingId", HandlingActivity.class)
+                        "HandlingEvent.findByBookingId", HandlingActivity.class)
                 .setParameter("bookingId", bookingId).getResultList());
     }
 }

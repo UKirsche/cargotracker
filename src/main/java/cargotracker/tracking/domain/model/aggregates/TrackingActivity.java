@@ -18,11 +18,11 @@ import lombok.NoArgsConstructor;
         @NamedQuery(name = "TrackingActivity.findAll",
                 query = "Select t from TrackingActivity t"),
         @NamedQuery(name = "TrackingActivity.findByTrackingNumber",
-                query = "Select t from TrackingActivity t where t.trackingNumber = :trackingNumber"),
+                query = "Select t from TrackingActivity t where t.trackingNumber.trackingNumber = :trackingNumber"),
         @NamedQuery(name = "TrackingActivity.getAllTrackingNos",
-                query = "Select t.trackingNumber from TrackingActivity t"),
+                query = "Select t.trackingNumber.trackingNumber from TrackingActivity t"),
         @NamedQuery(name = "TrackingActivity.findByBookingNumber",
-                query = "Select t from TrackingActivity t where t.bookingId = :bookingId")})
+                query = "Select t from TrackingActivity t where t.bookingId.bookingId = :bookingId")})
 @Table(name = "tracking_activity")
 @NoArgsConstructor
 @Getter

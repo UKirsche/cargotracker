@@ -20,7 +20,7 @@ public class CargoHandledEventHandler {
          * Cargo Handled Event handler
          * @param event
          */
-        @Transactional
+        @Transactional(Transactional.TxType.REQUIRES_NEW)
         public void observeCargoHandledEvent(@Observes CargoHandledEvent event) {
             System.out.println("***Cargo Handled Event****"+event.getContent());
                 CargoHandledEventData eventData = event.getContent();
@@ -28,9 +28,8 @@ public class CargoHandledEventHandler {
                 System.out.println(eventData.getHandlingLocation());
                 System.out.println(eventData.getHandlingCompletionTime());
                 System.out.println(eventData.getHandlingType());
-                System.out.println(eventData.getVoyageNumber());
-            assignTrackingIdCommandService.addTrackingEvent(
-                    TrackingActivityCommandEventAssembler.toCommandFromEvent(event));
+            System.out.println(eventData.getVoyageNumber());
+            assignTrackingIdCommandService.addTrackingEvent(TrackingActivityCommandEventAssembler.toCommandFromEvent(event));
         }
 
 
