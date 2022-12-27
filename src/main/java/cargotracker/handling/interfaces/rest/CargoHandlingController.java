@@ -29,11 +29,11 @@ public  class CargoHandlingController {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response registerHandlingActivity(HandlingActivityRegistrationResource handlingActivityRegistrationResource){
-        System.out.println("***"+handlingActivityRegistrationResource.getBookingId());
-        System.out.println("***"+handlingActivityRegistrationResource.getHandlingType());
+        System.out.println("***" + handlingActivityRegistrationResource.getBookingId());
+        System.out.println("***" + handlingActivityRegistrationResource.getHandlingType());
 
-        handlingActivityRegistrationCommandService.registerHandlingActivityService(
-                HandlingActivityRegistrationCommandDTOAssembler.toCommandFromDTO(handlingActivityRegistrationResource));
+        handlingActivityRegistrationCommandService
+                .registerHandlingActivityService(HandlingActivityRegistrationCommandDTOAssembler.toCommandFromDTO(handlingActivityRegistrationResource));
         final Response returnValue = Response.ok()
                 .entity("Handling Activity Registered")
                 .build();

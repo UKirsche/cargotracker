@@ -77,8 +77,10 @@ public class HandlingActivityRegistrationCommandService {
         }
 
         /**
-         * @param handlingActivityRegistrationCommand
-         * @return
+         * Creates the HandledEvent
+         *
+         * @param handlingActivityRegistrationCommand Command with relevant fields
+         * @return Event
          */
         private CargoHandledEvent createCargoHandledEvent(HandlingActivityRegistrationCommand handlingActivityRegistrationCommand) {
                 CargoHandledEvent cargoHandledEvent = new CargoHandledEvent();

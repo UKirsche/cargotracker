@@ -1,12 +1,12 @@
 package cargotracker.shareddomain.events;
 
 
-public class CargoHandledEvent  {
+import lombok.Getter;
+import lombok.Setter;
 
-    private CargoHandledEventData cargoHandledEventData;
-    public CargoHandledEvent(){}
-    public void setContent(CargoHandledEventData cargoHandledEventData) { this.cargoHandledEventData = cargoHandledEventData; }
-    public CargoHandledEventData getContent() {
-        return cargoHandledEventData;
-    }
+@Getter
+@Setter
+public class CargoHandledEvent {
+
+    private CargoHandledEventData content;
 }
