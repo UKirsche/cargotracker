@@ -1,21 +1,15 @@
 package cargotracker.booking.interfaces.rest.dto;
 
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Resource class for the Book Cargo Command API
  */
+@Getter
+@Setter
 public class RouteCargoResource {
-
     private String bookingId;
 
-
-    public RouteCargoResource(){}
-
-    public RouteCargoResource(String bookingId){
-        this.bookingId = bookingId;
-    }
-
-    public String getBookingId(){return this.bookingId;}
-
-    public void setBookingId(String bookingId){this.bookingId = bookingId;}
 }

@@ -14,8 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 public class RouteCargoCommand {
     private String cargoBookingId;
 
-    public RouteCargoCommand(){ }
-
     public RouteCargoCommand(String cargoBookingId){
         this.setCargoBookingId(cargoBookingId);
     }

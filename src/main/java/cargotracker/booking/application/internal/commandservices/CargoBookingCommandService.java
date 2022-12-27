@@ -53,8 +53,10 @@ public class CargoBookingCommandService {
     }
 
     /**
-     * Service Command method to assign a route to a Cargo
-     * @param routeCargoCommand
+     * Service Command method to assign a route to a Cargo. I.e. an itinerary for the cargo is computed bei the
+     * routing domain.
+     *
+     * @param routeCargoCommand command
      */
     @Transactional
     public void assignRouteToCargo(RouteCargoCommand routeCargoCommand) {
@@ -62,7 +64,7 @@ public class CargoBookingCommandService {
 
         CargoItinerary cargoItinerary = externalCargoRoutingService.fetchRouteForSpecification(cargo.getRouteSpecification());
 
-        cargo.assignToRoute(cargoItinerary);
+        cargo.assignRoute(cargoItinerary);
         cargoRepository.store(cargo);
 
         CargoRoutedEvent cargoRoutedEvent = getCargoRoutedEvent(routeCargoCommand);

@@ -64,9 +64,10 @@ public class Cargo {
 
     /**
      * Assigns Route to the Cargo
+     *
      * @param cargoItinerary
      */
-    public void assignToRoute(CargoItinerary cargoItinerary) {
+    public void assignRoute(CargoItinerary cargoItinerary) {
         this.itinerary = cargoItinerary;
     }
 
