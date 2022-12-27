@@ -13,6 +13,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Event;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import org.apache.commons.lang3.StringUtils;
 
 @ApplicationScoped
 public class HandlingActivityRegistrationCommandService {
@@ -24,34 +25,62 @@ public class HandlingActivityRegistrationCommandService {
         private Event<CargoHandledEvent> cargoHandledEventControl; // Event that needs to be raised when the Cargo is Handled
 
 
-
         /**
          * Service Command method to register a new Handling Activity
+         *
          * @return BookingId of the CargoBookingId
          */
         @Transactional
-        public void registerHandlingActivityService(HandlingActivityRegistrationCommand handlingActivityRegistrationCommand){
-                System.out.println("Handling Voyage Number is"+handlingActivityRegistrationCommand.getVoyageNumber());
-                HandlingActivity handlingActivity;
-                if(!handlingActivityRegistrationCommand.getVoyageNumber().equals("")) {
-                        handlingActivity = new HandlingActivity(
-                                new CargoBookingId(handlingActivityRegistrationCommand.getBookingId()),
-                                handlingActivityRegistrationCommand.getCompletionTime(),
-                                Type.valueOf(handlingActivityRegistrationCommand.getHandlingType()),
-                                new Location(handlingActivityRegistrationCommand.getUnLocode()),
-                                new VoyageNumber(handlingActivityRegistrationCommand.getVoyageNumber()));
-
-
-                } else {
-                        handlingActivity = new HandlingActivity(
-                                new CargoBookingId(handlingActivityRegistrationCommand.getBookingId()),
-                                handlingActivityRegistrationCommand.getCompletionTime(),
-                                Type.valueOf(handlingActivityRegistrationCommand.getHandlingType()),
-                                new Location(handlingActivityRegistrationCommand.getUnLocode()));
-                }
+        public void registerHandlingActivityService(HandlingActivityRegistrationCommand handlingActivityRegistrationCommand) {
+                System.out.println("Handling Voyage Number is" + handlingActivityRegistrationCommand.getVoyageNumber());
+                HandlingActivity handlingActivity = getHandlingActivity(handlingActivityRegistrationCommand);
 
                 handlingActivityRepository.store(handlingActivity);
+                CargoHandledEvent cargoHandledEvent = createCargoHandledEvent(handlingActivityRegistrationCommand);
 
+                System.out.println("*****cargohandlede" + handlingActivityRegistrationCommand.getBookingId() + " " + handlingActivityRegistrationCommand.getHandlingType()
+                        + " " + handlingActivityRegistrationCommand.getCompletionTime() + " " + handlingActivityRegistrationCommand.getUnLocode());
+
+                cargoHandledEventControl.fire(cargoHandledEvent);
+
+        }
+
+        private HandlingActivity getHandlingActivity(HandlingActivityRegistrationCommand handlingActivityRegistrationCommand) {
+                HandlingActivity handlingActivity;
+                String voyageNumber = handlingActivityRegistrationCommand.getVoyageNumber();
+                if (StringUtils.isEmpty(voyageNumber)) {
+                        handlingActivity = getHandlingActivityNoVoyage(handlingActivityRegistrationCommand);
+                } else {
+                        handlingActivity = getHandlingActivityWithVoyage(handlingActivityRegistrationCommand);
+                }
+                return handlingActivity;
+        }
+
+        private HandlingActivity getHandlingActivityNoVoyage(HandlingActivityRegistrationCommand handlingActivityRegistrationCommand) {
+                HandlingActivity handlingActivity;
+                handlingActivity = new HandlingActivity(
+                        new CargoBookingId(handlingActivityRegistrationCommand.getBookingId()),
+                        handlingActivityRegistrationCommand.getCompletionTime(),
+                        Type.valueOf(handlingActivityRegistrationCommand.getHandlingType()),
+                        new Location(handlingActivityRegistrationCommand.getUnLocode()));
+                return handlingActivity;
+        }
+
+        private HandlingActivity getHandlingActivityWithVoyage(HandlingActivityRegistrationCommand handlingActivityRegistrationCommand) {
+                HandlingActivity handlingActivity = new HandlingActivity(
+                        new CargoBookingId(handlingActivityRegistrationCommand.getBookingId()),
+                        handlingActivityRegistrationCommand.getCompletionTime(),
+                        Type.valueOf(handlingActivityRegistrationCommand.getHandlingType()),
+                        new Location(handlingActivityRegistrationCommand.getUnLocode()),
+                        new VoyageNumber(handlingActivityRegistrationCommand.getVoyageNumber()));
+                return handlingActivity;
+        }
+
+        /**
+         * @param handlingActivityRegistrationCommand
+         * @return
+         */
+        private CargoHandledEvent createCargoHandledEvent(HandlingActivityRegistrationCommand handlingActivityRegistrationCommand) {
                 CargoHandledEvent cargoHandledEvent = new CargoHandledEvent();
                 CargoHandledEventData eventData = new CargoHandledEventData();
                 eventData.setBookingId(handlingActivityRegistrationCommand.getBookingId());
@@ -62,11 +91,6 @@ public class HandlingActivityRegistrationCommandService {
 
                 System.out.println("***Event Data ***" + eventData);
                 cargoHandledEvent.setContent(eventData);
-
-                System.out.println("*****cargohandlede"+handlingActivityRegistrationCommand.getBookingId()+ " " + handlingActivityRegistrationCommand.getHandlingType()
-                + " " + handlingActivityRegistrationCommand.getCompletionTime() + " " +handlingActivityRegistrationCommand.getUnLocode() );
-
-                cargoHandledEventControl.fire(cargoHandledEvent);
-
+                return cargoHandledEvent;
         }
 }
