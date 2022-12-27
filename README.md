@@ -23,10 +23,14 @@ that connect the bounded contexts via certain patterns.
 
 ### UL
 
-More knowledge regarding the domain is found in DDD by Eric Evans (pp. 34).
+More knowledge regarding the domain is found in DDD by Eric Evans (pp. 25).
 
+- Cargo: Root aggregate
 - Route Specification: start location, end location, arrival date. Blueprint for an itinerary.
-- Cargo Itinerary:
+- Delivery: Domain class which tracks the progress of the Cargo against the *Route Specification / Itinerary*. Events of
+  cargo handling
+  are tracked in this class and made available bei business rules.
+- Cargo Itinerary: is the specific planned travelling plan consisting of legs (journey parts)
 
 # Test Case
 
