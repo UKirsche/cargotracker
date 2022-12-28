@@ -5,10 +5,10 @@ import cargotracker.booking.domain.model.valueobjects.CargoItinerary;
 import cargotracker.booking.domain.model.valueobjects.Leg;
 import cargotracker.booking.domain.model.valueobjects.RouteSpecification;
 import cargotracker.booking.domain.model.valueobjects.Voyage;
-import cargotracker.booking.infrastructure.services.http.ExternalCargoRoutingClient;
+import cargotracker.booking.infrastructure.services.http.CargoRoutingClient;
 import cargotracker.shareddomain.model.TransitEdge;
 import cargotracker.shareddomain.model.TransitPath;
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
 import java.util.ArrayList;
@@ -18,11 +18,11 @@ import java.util.stream.Collectors;
 /**
  * Anti Corruption Service Class
  */
-@ApplicationScoped
+@RequestScoped
 public class ExternalCargoRoutingService {
 
     @Inject
-    private ExternalCargoRoutingClient externalCargoRoutingClient;
+    private CargoRoutingClient routingClient;
 
     /**
      * The Booking Bounded Context makes an external call to the Routing Service of the Routing Bounded Context to
@@ -32,7 +32,7 @@ public class ExternalCargoRoutingService {
      */
     public CargoItinerary fetchRouteForSpecification(RouteSpecification routeSpecification) {
 
-        TransitPath transitPath = externalCargoRoutingClient.findOptimalRoute(
+        TransitPath transitPath = routingClient.findOptimalRoute(
                 routeSpecification.getOrigin().getUnLocCode(),
                 routeSpecification.getDestination().getUnLocCode(),
                 routeSpecification.getArrivalDeadline().toString()
