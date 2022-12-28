@@ -1,10 +1,12 @@
 # Jakarta EE 9 Implementation utilizing Open Liberty 22.0.0.13
 
-This Chapter contains a complete DDD implementation of the Cargo Tracker application based on the Jakarta EE Platform
-utilizing
-the OpenLiberty (v22.0.0.13) implementation
+This project contains a complete DDD implementation of the Cargo Tracker application based on the Jakarta EE Platform
+using OpenLiberty (v22.0.0.13). It is based on an updated version of the
+[code]((https://github.com/Apress/practical-ddd-in-enterprise-java)) from the book:
+[Practical Practical Domain-Driven Design in Enterprise Java](https://link.springer.com/book/10.1007/978-1-4842-4543-9)
+by Vijay Nair (Apress, 2019).
 
-The implementation adopts a modulithic based architectural style and uses the following technologies
+The implementation adopts a monolithic based architectural style and uses the following technologies
 
 - Jakarta EE v9.1 (WebProfile) as the core chassis
 - CDI Events as the messaging infrastructure which enables loose coupling between the various modules
@@ -12,18 +14,23 @@ The implementation adopts a modulithic based architectural style and uses the fo
 - Single WAR file which contains all the modules
 - OpenLiberty v22.0.0.13 as the runtime which has support for Jakarta EE 9.1
 
-The documentation covers the setup and testing process needed to run the cargotracker monolith correctly.
+The documentation covers some hints as what Business Domains are used, what books to read.
+Thereafter the setup and testing process needed to run the cargotracker monolith correctly are described.
 
-# Basic Business Logic (Flows)
+# The Domain Knowledge
 
-The Ubiqitous Language (UL) is important to understand the code. Equally important are the sagas or context maps
-that connect the bounded contexts via certain patterns.
+The Ubiqitous Language (UL) is derived from knowledge crunching with the domain experts
+and the developers. In the bounded contexts it describes and defines the most important concepts. The knowledge is
+always reflected in code. Therefore the code is hard to understand without domain knowledge. On the other hand,
+if the domain knowledge is prevalent, the code is easy to read.
 
-## Booking
+For the cargo tracker app, refer to
+the [book](https://www.amazon.de/Domain-Driven-Design-Tackling-Complexity-Software/dp/0321125215)
+by Eric Evans, pp.25.
 
-### UL
+## UL
 
-More knowledge regarding the domain is found in DDD by Eric Evans (pp. 25).
+### Bounded Context: Booking
 
 - **Cargo**: Root aggregate
 - **Route Specification**: start location, end location, arrival date. Blueprint for an itinerary as it contains the

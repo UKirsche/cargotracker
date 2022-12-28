@@ -2,7 +2,6 @@ package cargotracker.booking.infrastructure.services.http;
 
 import cargotracker.shareddomain.model.TransitPath;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.ws.rs.*;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.core.MediaType;
@@ -27,7 +26,6 @@ public class ExternalCargoRoutingClient {
                 .queryParam("deadline",arrivalDeadline)
                 .request(MediaType.APPLICATION_JSON)
                 .get(TransitPath.class);
-
     }
 
 }
