@@ -6,6 +6,7 @@ import cargotracker.booking.domain.model.entities.Location;
 import cargotracker.booking.domain.model.valueobjects.*;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
@@ -20,6 +21,7 @@ import lombok.Setter;
 @Table(name = "cargo")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Cargo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,12 +38,6 @@ public class Cargo {
     private CargoItinerary itinerary; //Itinerary Assigned to the Cargo
     @Embedded
     private Delivery delivery; // Checks the delivery progress of the cargo against the actual Route Specification and Itinerary
-    /**
-     * Default Constructor
-     */
-    public Cargo() {
-        // Nothing to initialize.
-    }
 
     /**
      * Constructor Command Handler for a new Cargo booking. Sets the state of the Aggregate

@@ -7,8 +7,10 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 
 @ApplicationScoped
+@Slf4j
 public class CargoHandledEventHandler {
 
     @Inject
@@ -22,7 +24,7 @@ public class CargoHandledEventHandler {
      */
     @Transactional(Transactional.TxType.REQUIRES_NEW)
     public void observeCargoHandledEvent(@Observes CargoHandledEvent event) {
-        System.out.println("***Cargo Handled Event****" + event.getContent());
+        log.info("Cargo Handled Event in Booking Bounded Context: {}", event.getContent());
         commandService.updateCargoForHandling(CargoHandlingEventAssembler.toCommandFromEvent(event));
     }
 

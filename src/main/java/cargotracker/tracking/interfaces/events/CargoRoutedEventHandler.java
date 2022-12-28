@@ -7,8 +7,10 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 
 @ApplicationScoped
+@Slf4j
 public class CargoRoutedEventHandler {
 
     @Inject
@@ -22,7 +24,7 @@ public class CargoRoutedEventHandler {
 
     @Transactional
     public void observeCargoRoutedEvent(@Observes CargoRoutedEvent event) {
-        System.out.println("****Observing Cargo Routed Event***");
+        log.info("Observes CargoRoutedEvent in Tracking Domain for BookingId {}", event.getContent().getBookingId());
         assignTrackingIdCommandService.assignTrackingNumberToCargo(TrackingDetailsCommandEventAssembler.toCommandFromEvent(event));
     }
 }

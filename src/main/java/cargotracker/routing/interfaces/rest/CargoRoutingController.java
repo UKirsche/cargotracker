@@ -43,9 +43,8 @@ public class CargoRoutingController {
             @QueryParam("destination") String destinationUnLocode,
             @QueryParam("deadline") String deadline) {
 
-        log.info("Finde optimale Route");
         List<Voyage> voyages = cargoRoutingQueryService.findAll();
-        System.out.println("***Voyages are****" + voyages.size());
+        log.info("Count voyages found {}", voyages.size());
         TransitPath transitPath = getTransitPath(voyages);
         return transitPath;
     }

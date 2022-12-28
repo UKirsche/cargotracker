@@ -9,12 +9,14 @@ import cargotracker.tracking.infrastructure.repositories.jpa.TrackingRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 
 
 /**
  * Application Service class for the Tracking Command Service
  */
 @ApplicationScoped
+@Slf4j
 public class AssignTrackingIdCommandService {
 
     @Inject
@@ -28,7 +30,7 @@ public class AssignTrackingIdCommandService {
     public TrackingNumber assignTrackingNumberToCargo(AssignTrackingNumberCommand assignTrackingNumberCommand) {
         String trackingNumber = getTrackingNumber(assignTrackingNumberCommand);
         TrackingActivity activity = new TrackingActivity(assignTrackingNumberCommand);
-        System.out.println("***Going to store in repository");
+        log.info("Tracking Bounded Context: Going to store in repository {}", trackingNumber);
         trackingRepository.store(activity); //Store the Cargo
 
         return new TrackingNumber(trackingNumber);

@@ -7,6 +7,7 @@ import cargotracker.handling.domain.model.valueobjects.VoyageNumber;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Date;
 
@@ -19,6 +20,7 @@ import java.util.Date;
 @Table(name = "handling_activity")
 @Getter
 @NoArgsConstructor
+@Slf4j
 public class HandlingActivity {
 
     @Id
@@ -72,7 +74,7 @@ public class HandlingActivity {
     public HandlingActivity(CargoBookingId cargoBookingId, Date completionTime,
                           Type type, Location location) {
 
-        System.out.println("***Type is**"+type);
+        log.debug("Type {}", type);
         if (type.requiresVoyage()) {
             throw new IllegalArgumentException(
                     "VoyageNumber is required for event type " + type);

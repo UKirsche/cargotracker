@@ -13,9 +13,11 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Event;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
 @ApplicationScoped
+@Slf4j
 public class HandlingActivityRegistrationCommandService {
 
         @Inject
@@ -32,14 +34,17 @@ public class HandlingActivityRegistrationCommandService {
          */
         @Transactional
         public void registerHandlingActivityService(HandlingActivityRegistrationCommand handlingActivityRegistrationCommand) {
-                System.out.println("Handling Voyage Number is" + handlingActivityRegistrationCommand.getVoyageNumber());
+                log.info("Handling Voyage Number is {}", handlingActivityRegistrationCommand.getVoyageNumber());
                 HandlingActivity handlingActivity = getHandlingActivity(handlingActivityRegistrationCommand);
 
                 HandlingActivity handlingActivityStored = handlingActivityRepository.store(handlingActivity);
                 CargoHandledEvent cargoHandledEvent = createCargoHandledEvent(handlingActivityRegistrationCommand, handlingActivityStored);
 
-                System.out.println("*****cargohandlede" + handlingActivityRegistrationCommand.getBookingId() + " " + handlingActivityRegistrationCommand.getHandlingType()
-                        + " " + handlingActivityRegistrationCommand.getCompletionTime() + " " + handlingActivityRegistrationCommand.getUnLocode());
+                log.info("Cargo handled: BookingId {}, HandlingType {}, CompletionTime {}, UnLocode{}",
+                        handlingActivityRegistrationCommand.getBookingId(),
+                        handlingActivityRegistrationCommand.getHandlingType(),
+                        handlingActivityRegistrationCommand.getCompletionTime(),
+                        handlingActivityRegistrationCommand.getUnLocode());
 
                 cargoHandledEventControl.fire(cargoHandledEvent);
 
@@ -93,7 +98,7 @@ public class HandlingActivityRegistrationCommandService {
                 eventData.setHandlingType(handlingActivityRegistrationCommand.getHandlingType());
                 eventData.setVoyageNumber(handlingActivityRegistrationCommand.getVoyageNumber());
 
-                System.out.println("***Event Data ***" + eventData);
+                log.info("***Event Data ***" + eventData);
                 cargoHandledEvent.setContent(eventData);
                 return cargoHandledEvent;
         }

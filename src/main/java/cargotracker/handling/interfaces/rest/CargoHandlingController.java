@@ -10,12 +10,14 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Controller for the REST API
  */
 @Path("/cargohandling")
 @ApplicationScoped
+@Slf4j
 public  class CargoHandlingController {
 
     @Inject
@@ -29,9 +31,7 @@ public  class CargoHandlingController {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response registerHandlingActivity(HandlingActivityRegistrationResource handlingActivityRegistrationResource){
-        System.out.println("***" + handlingActivityRegistrationResource.getBookingId());
-        System.out.println("***" + handlingActivityRegistrationResource.getHandlingType());
-
+        log.info("Register handling activity for {} , {} ", handlingActivityRegistrationResource.getBookingId(), handlingActivityRegistrationResource.getHandlingType());
         handlingActivityRegistrationCommandService
                 .registerHandlingActivityService(HandlingActivityRegistrationCommandDTOAssembler.toCommandFromDTO(handlingActivityRegistrationResource));
         final Response returnValue = Response.ok()

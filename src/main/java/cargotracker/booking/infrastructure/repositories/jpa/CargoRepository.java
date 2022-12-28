@@ -6,6 +6,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.logging.Logger;
  * related to the state of the Cargo
  */
 @ApplicationScoped
+@Slf4j
 public class CargoRepository {
 
     private static final long serialVersionUID = 1L;
@@ -53,7 +55,7 @@ public class CargoRepository {
      * @param cargo
      */
     public void store(Cargo cargo) {
-        System.out.println("***Entity Manager is***"+entityManager);
+        log.debug("Entity Manager is {}", entityManager);
         entityManager.persist(cargo);
         entityManager.flush();
     }
