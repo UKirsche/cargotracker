@@ -10,7 +10,7 @@ The implementation adopts a monolithic based architectural style and uses the fo
 
 - Jakarta EE v9.1 (WebProfile) as the core chassis
 - CDI Events as the messaging infrastructure which enables loose coupling between the various modules
-- MySql as the underlying Database
+- MySql as the underlying Database (provided as container in docker-compose-file)
 - Single WAR file which contains all the modules
 - OpenLiberty v22.0.0.13 as the runtime which has support for Jakarta EE 9.1
 
