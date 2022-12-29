@@ -74,7 +74,7 @@ public class HandlingActivity {
     public HandlingActivity(CargoBookingId cargoBookingId, Date completionTime,
                           Type type, Location location) {
 
-        log.debug("Type {}", type);
+        LOG.debug("Type {}", type);
         if (type.requiresVoyage()) {
             throw new IllegalArgumentException(
                     "VoyageNumber is required for event type " + type);

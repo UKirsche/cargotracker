@@ -30,7 +30,7 @@ public class AssignTrackingIdCommandService {
     public TrackingNumber assignTrackingNumberToCargo(AssignTrackingNumberCommand assignTrackingNumberCommand) {
         String trackingNumber = getTrackingNumber(assignTrackingNumberCommand);
         TrackingActivity activity = new TrackingActivity(assignTrackingNumberCommand);
-        log.info("Tracking Bounded Context: Going to store in repository {}", trackingNumber);
+        LOG.info("Tracking Bounded Context: Going to store in repository {}", trackingNumber);
         trackingRepository.store(activity); //Store the Cargo
 
         return new TrackingNumber(trackingNumber);

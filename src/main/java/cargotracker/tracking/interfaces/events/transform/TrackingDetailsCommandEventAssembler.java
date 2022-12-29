@@ -17,7 +17,7 @@ public class TrackingDetailsCommandEventAssembler {
      * @return AssignTrackingNumberCommand Model
      */
     public static AssignTrackingNumberCommand toCommandFromEvent(CargoRoutedEvent cargoRoutedEvent){
-        log.info("CargoRoutedEvent BookingId {}", cargoRoutedEvent.getContent().getBookingId());
+        LOG.info("CargoRoutedEvent BookingId {}", cargoRoutedEvent.getContent().getBookingId());
         return new AssignTrackingNumberCommand(cargoRoutedEvent.getContent().getBookingId(), "");
     }
 }

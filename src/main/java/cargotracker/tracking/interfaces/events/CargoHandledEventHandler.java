@@ -26,7 +26,7 @@ public class CargoHandledEventHandler {
     @Transactional(Transactional.TxType.REQUIRES_NEW)
     public void observeCargoHandledEvent(@Observes CargoHandledEvent event) {
         CargoHandledEventData eventData = event.getContent();
-        log.info("Cargo Handled Event {} with {}, {}, {}, {},{}",
+        LOG.info("Cargo Handled Event {} with {}, {}, {}, {},{}",
                 eventData,
                 eventData.getBookingId(),
                 eventData.getHandlingLocation(),

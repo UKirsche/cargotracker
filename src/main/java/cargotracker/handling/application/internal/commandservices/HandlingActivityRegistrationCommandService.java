@@ -34,13 +34,13 @@ public class HandlingActivityRegistrationCommandService {
          */
         @Transactional
         public void registerHandlingActivityService(HandlingActivityRegistrationCommand handlingActivityRegistrationCommand) {
-                log.info("Handling Voyage Number is {}", handlingActivityRegistrationCommand.getVoyageNumber());
+                LOG.info("Handling Voyage Number is {}", handlingActivityRegistrationCommand.getVoyageNumber());
                 HandlingActivity handlingActivity = getHandlingActivity(handlingActivityRegistrationCommand);
 
                 HandlingActivity handlingActivityStored = handlingActivityRepository.store(handlingActivity);
                 CargoHandledEvent cargoHandledEvent = createCargoHandledEvent(handlingActivityRegistrationCommand, handlingActivityStored);
 
-                log.info("Cargo handled: BookingId {}, HandlingType {}, CompletionTime {}, UnLocode{}",
+                LOG.info("Cargo handled: BookingId {}, HandlingType {}, CompletionTime {}, UnLocode{}",
                         handlingActivityRegistrationCommand.getBookingId(),
                         handlingActivityRegistrationCommand.getHandlingType(),
                         handlingActivityRegistrationCommand.getCompletionTime(),
@@ -98,7 +98,7 @@ public class HandlingActivityRegistrationCommandService {
                 eventData.setHandlingType(handlingActivityRegistrationCommand.getHandlingType());
                 eventData.setVoyageNumber(handlingActivityRegistrationCommand.getVoyageNumber());
 
-                log.info("***Event Data ***" + eventData);
+                LOG.info("***Event Data ***" + eventData);
                 cargoHandledEvent.setContent(eventData);
                 return cargoHandledEvent;
         }

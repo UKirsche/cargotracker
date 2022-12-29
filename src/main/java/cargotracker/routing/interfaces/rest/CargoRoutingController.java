@@ -44,7 +44,7 @@ public class CargoRoutingController {
             @QueryParam("deadline") String deadline) {
 
         List<Voyage> voyages = cargoRoutingQueryService.findAll();
-        log.info("Count voyages found {}", voyages.size());
+        LOG.info("Count voyages found {}", voyages.size());
         TransitPath transitPath = getTransitPath(voyages);
         return transitPath;
     }

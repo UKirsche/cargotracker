@@ -30,7 +30,7 @@ public class CargoBookingController {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response bookCargo(BookCargoResource bookCargoResource){
-        log.info("Book Cargo to {}", bookCargoResource.getDestLocation());
+        LOG.info("Book Cargo to {}", bookCargoResource.getDestLocation());
         BookingId bookingId = cargoBookingCommandService.bookCargo(BookCargoCommandDTOAssembler.toCommandFromDTO(bookCargoResource));
 
         final Response returnValue = Response.ok()

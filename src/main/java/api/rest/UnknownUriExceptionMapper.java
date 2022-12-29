@@ -13,7 +13,7 @@ public class UnknownUriExceptionMapper implements ResponseExceptionMapper<Unknow
 
     @Override
     public boolean handles(int status, MultivaluedMap<String, Object> headers) {
-        log.info("status = " + status);
+        LOG.info("status = " + status);
         return status == 404;
     }
 

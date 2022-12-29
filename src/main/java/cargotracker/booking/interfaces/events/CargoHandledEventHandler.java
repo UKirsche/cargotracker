@@ -24,7 +24,7 @@ public class CargoHandledEventHandler {
      */
     @Transactional(Transactional.TxType.REQUIRES_NEW)
     public void observeCargoHandledEvent(@Observes CargoHandledEvent event) {
-        log.info("Cargo Handled Event in Booking Bounded Context: {}", event.getContent());
+        LOG.info("Cargo Handled Event in Booking Bounded Context: {}", event.getContent());
         commandService.updateCargoForHandling(CargoHandlingEventAssembler.toCommandFromEvent(event));
     }
 

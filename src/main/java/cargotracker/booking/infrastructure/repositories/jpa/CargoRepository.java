@@ -11,8 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Repository class for the Cargo Aggregate. Deals with all repository operations
@@ -24,12 +22,8 @@ public class CargoRepository {
 
     private static final long serialVersionUID = 1L;
 
-    private static final Logger logger = Logger.getLogger(
-            CargoRepository.class.getName());
-
     @PersistenceContext(name = "cargotracker")
     private EntityManager entityManager;
-
 
     /**
      * Returns the Cargo Aggregate based on the Booking Identifier of a Cargo
@@ -43,7 +37,7 @@ public class CargoRepository {
                     .setParameter("bookingId", bookingId)
                     .getSingleResult();
         } catch (NoResultException e) {
-            logger.log(Level.FINE, "Find called on non-existant Booking ID.", e);
+            LOG.error("Find called on non-existant Booking ID:", e);
             cargo = null;
         }
 
@@ -55,7 +49,7 @@ public class CargoRepository {
      * @param cargo
      */
     public void store(Cargo cargo) {
-        log.debug("Entity Manager is {}", entityManager);
+        LOG.debug("Entity Manager is {}", entityManager);
         entityManager.persist(cargo);
         entityManager.flush();
     }
@@ -90,7 +84,7 @@ public class CargoRepository {
             bookingIds = entityManager.createNamedQuery(
                     "Cargo.getAllTrackingIds", BookingId.class).getResultList();
         } catch (NoResultException e) {
-            logger.log(Level.FINE, "Unable to get all tracking IDs", e);
+            LOG.error("Unable to get all tracking IDs", e);
         }
 
         return bookingIds;

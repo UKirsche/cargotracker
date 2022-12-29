@@ -31,7 +31,7 @@ public  class CargoHandlingController {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response registerHandlingActivity(HandlingActivityRegistrationResource handlingActivityRegistrationResource){
-        log.info("Register handling activity for {} , {} ", handlingActivityRegistrationResource.getBookingId(), handlingActivityRegistrationResource.getHandlingType());
+        LOG.info("Register handling activity for {} , {} ", handlingActivityRegistrationResource.getBookingId(), handlingActivityRegistrationResource.getHandlingType());
         handlingActivityRegistrationCommandService
                 .registerHandlingActivityService(HandlingActivityRegistrationCommandDTOAssembler.toCommandFromDTO(handlingActivityRegistrationResource));
         final Response returnValue = Response.ok()

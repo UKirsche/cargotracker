@@ -24,7 +24,7 @@ public class CargoRoutedEventHandler {
 
     @Transactional
     public void observeCargoRoutedEvent(@Observes CargoRoutedEvent event) {
-        log.info("Observes CargoRoutedEvent in Tracking Domain for BookingId {}", event.getContent().getBookingId());
+        LOG.info("Observes CargoRoutedEvent in Tracking Domain for BookingId {}", event.getContent().getBookingId());
         assignTrackingIdCommandService.assignTrackingNumberToCargo(TrackingDetailsCommandEventAssembler.toCommandFromEvent(event));
     }
 }

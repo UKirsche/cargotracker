@@ -11,6 +11,6 @@ public class CargoBookedEventHandler {
 
     public void testEventObserving(@Observes CargoBookedEvent event) {
         // Processing of an event
-        log.info("Event Handler auf Tracking für CargoBooked Event {}", event.getId());
+        LOG.info("Event Handler auf Tracking für CargoBooked Event {}", event.getId());
     }
 }
